@@ -29,7 +29,7 @@ def get_first_n_examples_id_each_class(Y_test, n=1):
         if len(loc) > 0 :
             selected_idx.append(list(loc[:n]))
 
-    selected_idx = reduce(lambda x,y:x+y, zip(*selected_idx))
+    selected_idx = reduce(lambda x,y:x+y, list(zip(*selected_idx)))
 
     return np.array(selected_idx)
 
@@ -110,9 +110,9 @@ def evaluate_adversarial_examples(X_test, Y_test, X_test_adv, Y_test_target, tar
 
     mean_l2_dist, mean_li_dist, mean_l0_dist_value, mean_l0_dist_pixel = calculate_mean_distance(X_test[success_idx], X_test_adv[success_idx])
     # print ("\n---Attack: %s" % attack_string)
-    print ("Success rate: %.2f%%, Mean confidence of SAEs: %.2f%%" % (success_rate*100, mean_conf*100))
+    print(("Success rate: %.2f%%, Mean confidence of SAEs: %.2f%%" % (success_rate*100, mean_conf*100)))
     print ("### Statistics of the SAEs:")
-    print ("L2 dist: %.4f, Li dist: %.4f, L0 dist_value: %.1f%%, L0 dist_pixel: %.1f%%" % (mean_l2_dist, mean_li_dist, mean_l0_dist_value*100, mean_l0_dist_pixel*100))
+    print(("L2 dist: %.4f, Li dist: %.4f, L0 dist_value: %.1f%%, L0 dist_pixel: %.1f%%" % (mean_l2_dist, mean_li_dist, mean_l0_dist_value*100, mean_l0_dist_pixel*100)))
 
     rec = {}
     rec['success_rate'] = success_rate

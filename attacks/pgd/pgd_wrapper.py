@@ -16,7 +16,7 @@ def override_params(default, update):
             del update[key]
 
     if len(update) > 0:
-        warnings.warn("Ignored arguments: %s" % update.keys())
+        warnings.warn("Ignored arguments: %s" % list(update.keys()))
     return default
 
 

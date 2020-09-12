@@ -58,19 +58,19 @@ class MNISTDataset:
             model = pgdtrained_mnist_model(logits=logits, input_range_type = input_range_type, pre_filter=pre_filter)
         print("\n===Defined TensorFlow model graph.")
         model.load_weights(model_weights_fpath)
-        print ("---Loaded MNIST-%s model.\n" % model_name)
+        print(("---Loaded MNIST-%s model.\n" % model_name))
         return model
 
 if __name__ == '__main__':
     # from datasets.mnist import *
     dataset = MNISTDataset()
     X_test, Y_test = dataset.get_test_dataset()
-    print (X_test.shape)
-    print (Y_test.shape)
+    print((X_test.shape))
+    print((Y_test.shape))
 
     model_name = 'cleverhans'
     model = dataset.load_model_by_name(model_name)
 
     model.compile(loss='categorical_crossentropy',optimizer='sgd', metrics=['acc'])
     _,accuracy = model.evaluate(X_test, Y_test, batch_size=128)
-    print ("\nTesting accuracy: %.4f" % accuracy)
+    print(("\nTesting accuracy: %.4f" % accuracy))

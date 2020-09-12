@@ -1,7 +1,7 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+
+
+
+
 
 import os
 import pdb
@@ -123,7 +123,7 @@ def main(argv=None):
                 correct_and_selected_idx = get_first_n_examples_id_each_class(Y_test_all[correct_idx], n=nb_examples_per_class)
                 selected_idx = [ correct_idx[i] for i in correct_and_selected_idx ]
     else:
-        selected_idx = np.array(range(FLAGS.nb_examples))
+        selected_idx = np.array(list(range(FLAGS.nb_examples)))
 
     from utils.output import format_number_range
     selected_example_idx_ranges = format_number_range(sorted(selected_idx))
@@ -175,7 +175,7 @@ def main(argv=None):
     X_test_adv_discretized_list = []
     Y_test_adv_discretized_pred_list = []
 
-    attack_string_list = filter(lambda x:len(x)>0, FLAGS.attacks.lower().split(';'))
+    attack_string_list = [x for x in FLAGS.attacks.lower().split(';') if len(x)>0]
     to_csv = []
 
     X_adv_cache_folder = os.path.join(FLAGS.result_folder, 'adv_examples')
@@ -265,14 +265,14 @@ def main(argv=None):
     if FLAGS.visualize is True:
         from datasets.visualization import show_imgs_in_rows
         if FLAGS.test_mode or FLAGS.balance_sampling:
-            selected_idx_vis = range(Y_test.shape[1])
+            selected_idx_vis = list(range(Y_test.shape[1]))
         else:
             selected_idx_vis = get_first_n_examples_id_each_class(Y_test, 1)
 
         legitimate_examples = X_test[selected_idx_vis]
 
         rows = [legitimate_examples]
-        rows += map(lambda x:x[selected_idx_vis], X_test_adv_list)
+        rows += [x[selected_idx_vis] for x in X_test_adv_list]
 
         img_fpath = os.path.join(FLAGS.result_folder, '%s_attacks_%s_examples.png' % (task_id, attack_string_hash) )
         show_imgs_in_rows(rows, img_fpath)

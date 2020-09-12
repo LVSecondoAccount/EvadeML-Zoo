@@ -3,9 +3,9 @@ Implementation of attack methods. Running this file as a program will
 apply the attack to the model specified by the config file and store
 the examples in an .npy file.
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import tensorflow as tf
 import numpy as np

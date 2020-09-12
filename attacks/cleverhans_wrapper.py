@@ -28,7 +28,7 @@ def override_params(default, update):
             del update[key]
 
     if len(update) > 0:
-        warnings.warn("Ignored arguments: %s" % update.keys())
+        warnings.warn("Ignored arguments: %s" % list(update.keys()))
     return default
 
 
@@ -77,7 +77,7 @@ def generate_jsma_examples(sess, model, x, y, X, Y, attack_params, verbose, atta
 
     adv_x_list = []
 
-    with click.progressbar(range(0, len(X)), file=sys.stderr, show_pos=True, 
+    with click.progressbar(list(range(0, len(X))), file=sys.stderr, show_pos=True, 
                            width=40, bar_template='  [%(bar)s] JSMA Attacking %(info)s', 
                            fill_char='>', empty_char='-') as bar:
         # Loop over the samples we want to perturb into adversarial examples

@@ -39,9 +39,9 @@ def data_imagenet(img_folder, img_size, label_style = 'caffe', label_size = 1000
     else:
         selected_fnames = fnames
 
-    labels = map(lambda x: int(x.split('.')[0]), selected_fnames)
-    img_path_list = map(lambda x: [os.path.join(img_folder, x), img_size], selected_fnames)
-    X = map(_load_single_image, img_path_list)
+    labels = [int(x.split('.')[0]) for x in selected_fnames]
+    img_path_list = [[os.path.join(img_folder, x), img_size] for x in selected_fnames]
+    X = list(map(_load_single_image, img_path_list))
     X = np.concatenate(X, axis=0)
     Y = np.eye(1000)[labels]
     return X, Y
@@ -67,7 +67,7 @@ class ImageNetDataset:
     def get_test_data(self, img_size, idx_begin, idx_end):
         # Return part of the dataset.
         self.image_size = img_size
-        X, Y = data_imagenet(self.img_folder, self.image_size, selected_idx=range(idx_begin, idx_end))
+        X, Y = data_imagenet(self.img_folder, self.image_size, selected_idx=list(range(idx_begin, idx_end)))
         X /= 255
         return X, Y
 

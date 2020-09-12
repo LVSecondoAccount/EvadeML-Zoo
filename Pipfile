@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+tensorflow = "==1.1.0"
+numpy = ">=1.13.3"
+matplotlib = "*"
+h5py = "*"
+scikit-learn = "*"
+click = "*"
+future = "*"
+opencv-python = "*"
+tinydb = "*"
+Keras = "==2.0.4"
+Pillow = "*"
+
+[requires]
+python_version = "3.6"

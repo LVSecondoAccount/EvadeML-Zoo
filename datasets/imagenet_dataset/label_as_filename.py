@@ -28,7 +28,7 @@ elif style == 'caffe':
     get_class_id_func = lambda x: int(x.split()[1])
 
 labels_text = open(ground_truth_file[style]).readlines()
-labels = map(get_class_id_func, labels_text)
+labels = list(map(get_class_id_func, labels_text))
 
 tgt_folder = "ILSVRC2012_img_val_labeled_%s" % style
 tgt_folder = os.path.join(os.path.dirname(src_folder), tgt_folder)

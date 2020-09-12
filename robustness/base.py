@@ -1,7 +1,7 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+
+
+
+
 
 import hashlib
 import sys, os
@@ -63,7 +63,7 @@ def evaluate_robustness(params_str, model, Y, X, Y_adv, attack_string_list, X_ad
             X_adv = X_adv_list[i]
             if hasattr(rc, 'visualize_and_predict'):
                 X_adv_filtered, Y_pred_adv = rc.visualize_and_predict(X_adv)
-                rows += map(lambda x:x[selected_idx_vis], [X_adv, X_adv_filtered])
+                rows += [x[selected_idx_vis] for x in [X_adv, X_adv_filtered]]
             else:
                 Y_pred_adv = rc.predict(X_adv)
             accuracy = calculate_accuracy(Y_pred_adv, Y_adv)

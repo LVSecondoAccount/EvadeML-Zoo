@@ -11,7 +11,7 @@ external_libs = {'Cleverhans': "externals/cleverhans",
 
 project_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
-for lib_name, lib_path in external_libs.items():
+for lib_name, lib_path in list(external_libs.items()):
     lib_path = os.path.join(project_path, lib_path)
 
     if lib_name == 'Carlini_nn_robust_attacks':
@@ -45,4 +45,4 @@ for lib_name, lib_path in external_libs.items():
             open(lib_token_fpath, 'a').close()
     
     sys.path.append(lib_path)
-    print("Located %s" % lib_name)
+    print(("Located %s" % lib_name))

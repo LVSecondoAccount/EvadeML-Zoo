@@ -71,7 +71,7 @@ tf_squeezers_name_imagenet = ['median_filter_1_2', 'median_filter_2_1', 'median_
 
 def get_tf_squeezers_by_str(tf_squeezers_str):
     tf_squeezers_name = tf_squeezers_str.split(',')
-    return map(get_tf_squeezer_by_name, tf_squeezers_name)
+    return list(map(get_tf_squeezer_by_name, tf_squeezers_name))
 
 def kl_tf(x1, x2, eps = 0.000000001):
     x1 = tf.clip_by_value(x1, eps, 1)
@@ -104,7 +104,7 @@ def generate_adaptive_carlini_l2_examples(sess, model, x, y, X, Y_target, attack
         tf_squeezers = get_tf_squeezers_by_str(tf_squeezers_str)
         attack_params['tf_squeezers'] = tf_squeezers
 
-    accepted_params = default_params.keys()
+    accepted_params = list(default_params.keys())
     for k in attack_params:
         if k not in accepted_params:
             raise NotImplementedError("Unsuporrted params in Carlini L2: %s" % k)
@@ -143,7 +143,7 @@ def adaptive_CarliniL2(sess, model, X, Y_target, eval_dir, batch_size, confidenc
     # Gradient required.
     y_pred_logits = model_logits(x_star)
     y_pred = model(x_star)
-    print ("tf_squezers: %s" % tf_squeezers)
+    print(("tf_squezers: %s" % tf_squeezers))
     y_squeezed_pred_list = [ model(func(x_star)) for func in tf_squeezers ]
     
     coeff = tf.placeholder(shape=(N0,), dtype=tf.float32)
@@ -271,7 +271,7 @@ def adaptive_CarliniL2(sess, model, X, Y_target, eval_dir, batch_size, confidenc
                     best_images[i] = xst[i]
                     improve_count += 1
             if j % 100 == 0:
-                print("Adv. training iter. {}/{} improved {}".format(j, max_iterations, improve_count))
+                print(("Adv. training iter. {}/{} improved {}".format(j, max_iterations, improve_count)))
                 improve_count = 0
 
         xst, adv_fail, l1o, l2d = sess.run([x_star, correct_prediction, detector_penalty, l2dist], feed_dict={
@@ -288,7 +288,7 @@ def adaptive_CarliniL2(sess, model, X, Y_target, eval_dir, batch_size, confidenc
                 best_iter[i] = max_iterations
                 best_images[i] = xst[i]
                 improve_count += 1
-        print("Finished training {}/{} improved {}".format(max_iterations, max_iterations, improve_count))
+        print(("Finished training {}/{} improved {}".format(max_iterations, max_iterations, improve_count)))
 
         # Save generated examples and their coefficients
         np.save(eval_dir + '/combined_adv_imgs.npy', best_images)

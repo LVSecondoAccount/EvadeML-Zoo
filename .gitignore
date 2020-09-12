@@ -104,3 +104,4 @@ results*
 
 # MacOS
 .DS_Store
+Pipfile.lock

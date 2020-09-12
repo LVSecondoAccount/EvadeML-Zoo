@@ -77,7 +77,7 @@ class FeatureSqueezingDetector:
         squeezers_name = params['squeezers'].split(',')
         self.set_config(layer_id, normalizer, metric, squeezers_name)
 
-        if params.has_key('threshold'):
+        if 'threshold' in params:
             self.threshold = float(params['threshold'])
         else:
             self.threshold = None
@@ -117,7 +117,7 @@ class FeatureSqueezingDetector:
 
         for layer in model.layers:
             shape_size = functools.reduce(operator.mul, layer.output_shape[1:])
-            print (layer.name, shape_size)
+            print((layer.name, shape_size))
 
         xs = np.arange(len(model.layers))
 
@@ -155,7 +155,7 @@ class FeatureSqueezingDetector:
                 label_list.append("%s_%s" % (normalizer, distance_metric_name))
 
                 layer_id = np.argmax(series)
-                print ("Best: Metric-%s at Layer-%d, normalized by %s" % (distance_metric_name, layer_id, normalizer))
+                print(("Best: Metric-%s at Layer-%d, normalized by %s" % (distance_metric_name, layer_id, normalizer)))
                 ret.append([layer_id, normalizer, distance_metric_name])
 
             draw_plot(xs, series_list, label_list, "./%s_%s.png" % (self.name_prefix, normalizer))
@@ -232,7 +232,7 @@ class FeatureSqueezingDetector:
         """
 
         if self.threshold is not None:
-            print ("Loaded a pre-defined threshold value %f" % self.threshold)
+            print(("Loaded a pre-defined threshold value %f" % self.threshold))
         else:
             layer_id, normalizer_name, metric_name, squeezers_name = self.get_config()
 
@@ -243,7 +243,7 @@ class FeatureSqueezingDetector:
             selected_distance_idx = int(np.ceil(len(X_neg) * (1-self.train_fpr)))
             threshold = sorted(distances)[selected_distance_idx-1]
             self.threshold = threshold
-            print ("Selected %f as the threshold value." % self.threshold)
+            print(("Selected %f as the threshold value." % self.threshold))
         return self.threshold
 
     def test(self, X):

@@ -90,7 +90,7 @@ def generate_carlini_li_examples(sess, model, x, y, X, Y, attack_params, verbose
     
     X_adv_list = []
 
-    with click.progressbar(range(0, len(X)), file=sys.stderr, show_pos=True, 
+    with click.progressbar(list(range(0, len(X))), file=sys.stderr, show_pos=True, 
                            width=40, bar_template='  [%(bar)s] Carlini Li Attacking %(info)s', 
                            fill_char='>', empty_char='-') as bar:
         for i in bar:
@@ -127,7 +127,7 @@ def generate_carlini_l0_examples(sess, model, x, y, X, Y, attack_params, verbose
 
     X_adv_list = []
 
-    with click.progressbar(range(0, len(X)), file=sys.stderr, show_pos=True, 
+    with click.progressbar(list(range(0, len(X))), file=sys.stderr, show_pos=True, 
                            width=40, bar_template='  [%(bar)s] Carlini L0 Attacking %(info)s', 
                            fill_char='>', empty_char='-') as bar:
         for i in bar:

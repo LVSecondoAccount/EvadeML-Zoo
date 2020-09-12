@@ -15,11 +15,11 @@ def parse_params(params_str):
         return params_str, {}
     subject, params_str = params_str.split('?')
     params = urlparse.parse_qs(params_str)
-    params = dict( (k, v.lower() if len(v)>1 else v[0] ) for k,v in params.items())
+    params = dict( (k, v.lower() if len(v)>1 else v[0] ) for k,v in list(params.items()))
 
     # Data type conversion.
     integer_parameter_names = ['batch_size', 'max_iterations', 'num_classes', 'max_iter', 'nb_iter', 'max_iter_df']
-    for k,v in params.items():
+    for k,v in list(params.items()):
         if k in integer_parameter_names:
             params[k] = int(v)
         elif v == 'true':

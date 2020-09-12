@@ -1,7 +1,7 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+
+
+
+
 
 import numpy as np
 import random
@@ -15,6 +15,7 @@ from .magnet_mnist import MagNetDetector as MagNetDetectorMNIST
 from .magnet_cifar import MagNetDetector as MagNetDetectorCIFAR
 
 from tensorflow.python.platform import flags
+from functools import reduce
 FLAGS = flags.FLAGS
 from utils.output import write_to_csv
 
@@ -105,7 +106,7 @@ class DetectionEvaluator:
         random.seed(1234)
         length = len(X_detect)
         train_ratio = 0.5
-        train_idx = random.sample(range(length), int(train_ratio*length))
+        train_idx = random.sample(list(range(length)), int(train_ratio*length))
         train_test_seq = [1 if idx in train_idx else 0 for idx in range(length) ]
 
         # 2. Tag the misclassified examples, both legitimate and adversarial.

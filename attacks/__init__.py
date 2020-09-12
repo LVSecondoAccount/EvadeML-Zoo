@@ -18,7 +18,7 @@ from .pgd.pgd_wrapper import generate_pgdli_examples
 def maybe_generate_adv_examples(sess, model, x, y, X, Y, attack_name, attack_params, use_cache=False, verbose=True, attack_log_fpath=None):
     x_adv_fpath = use_cache
     if use_cache and os.path.isfile(x_adv_fpath):
-        print ("Loading adversarial examples from [%s]." % os.path.basename(x_adv_fpath))
+        print(("Loading adversarial examples from [%s]." % os.path.basename(x_adv_fpath)))
         X_adv, duration = pickle.load(open(x_adv_fpath, "rb"))
     else:
         time_start = time.time()

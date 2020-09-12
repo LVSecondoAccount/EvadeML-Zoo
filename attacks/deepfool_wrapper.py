@@ -20,7 +20,7 @@ def override_params(default, update):
             del update[key]
 
     if len(update) > 0:
-        warnings.warn("Ignored arguments: %s" % update.keys())
+        warnings.warn("Ignored arguments: %s" % list(update.keys()))
     return default
 
 
@@ -60,7 +60,7 @@ def generate_deepfool_examples(sess, model, x, y, X, Y, attack_params, verbose, 
     aux_info['loop_i'] = []
     aux_info['k_i'] = []
 
-    with click.progressbar(range(0, len(X)), file=sys.stderr, show_pos=True,
+    with click.progressbar(list(range(0, len(X))), file=sys.stderr, show_pos=True,
                            width=40, bar_template='  [%(bar)s] DeepFool Attacking %(info)s',
                            fill_char='>', empty_char='-') as bar:
         # Loop over the samples we want to perturb into adversarial examples

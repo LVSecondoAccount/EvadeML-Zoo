@@ -61,11 +61,11 @@ class CIFAR10Dataset:
             model_weights_fpath = get_densenet_weights_path(self.dataset_name)
         print("\n===Defined TensorFlow model graph.")
         model.load_weights(model_weights_fpath)
-        print ("---Loaded CIFAR-10-%s model.\n" % model_name)
+        print(("---Loaded CIFAR-10-%s model.\n" % model_name))
         return model
 
 if __name__ == '__main__':
     dataset = CIFAR10Dataset()
     X_test, Y_test = dataset.get_test_dataset()
-    print (X_test.shape)
-    print (Y_test.shape)
+    print((X_test.shape))
+    print((Y_test.shape))
