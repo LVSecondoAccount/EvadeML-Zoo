@@ -9,39 +9,39 @@ from utils import load_externals
 from utils.output import disablePrint, enablePrint
 
 class tohinzModelWrapper:
-	def __init__(self, logits, image_size, num_channels, num_labels):
-		self.logits = logits
-		self.image_size = image_size
-		self.num_channels = num_channels
-		self.num_labels = num_labels
-		
-	def predict(self, X):
-		return self.model(X)
-		
+    def __init__(self, logits, image_size, num_channels, num_labels):
+        self.logits = logits
+        self.image_size = image_size
+        self.num_channels = num_channels
+        self.num_labels = num_labels
+        
+    def predict(self, X):
+        return self.model(X)
+        
 from keras.models import Model
 from keras.layers import Lambda, Input
 
 def convert_model(model, input_shape):
-	model_logits = Model(inputs=model.layers[0].input,outputs = model.layers[-2].output)
-	
-	input_tensor = Input(shape=input_shape)
-	
-	scaler = lambda x: x
-	
-	scaler_layer = Lambda(scaler, input_shape=input_shape)(input_tensor)
-	output_tensor = model_logits(scaler_layer)
-	
-	model_new = Model(inputs=input_tensor, outputs=output_tensor)
-	return model_new
-	
+    model_logits = Model(inputs=model.layers[0].input,outputs = model.layers[-2].output)
+    
+    input_tensor = Input(shape=input_shape)
+    
+    scaler = lambda x: x
+    
+    scaler_layer = Lambda(scaler, input_shape=input_shape)(input_tensor)
+    output_tensor = model_logits(scaler_layer)
+    
+    model_new = Model(inputs=input_tensor, outputs=output_tensor)
+    return model_new
+    
 def wrap_to_tohinz_model(model,X,Y):
-	image_size, num_channels = X.shape[1], X.shape[3]
-	num_labels = Y.shape[1]
-	model_logits = convert_model(model, input_shape=X.shape[1:])
-	model_wrapper = tohinzModelWrapper(model_logits,image_size=image_size,num_channels=num_channels,
-	num_labels = num_labels)
-	return model_wrapper
-	
+    image_size, num_channels = X.shape[1], X.shape[3]
+    num_labels = Y.shape[1]
+    model_logits = convert_model(model, input_shape=X.shape[1:])
+    model_wrapper = tohinzModelWrapper(model_logits,image_size=image_size,num_channels=num_channels,
+    num_labels = num_labels)
+    return model_wrapper
+    
 from nn_robust_attacks.l2_attack import CarliniL2
 def generate_carlini_l2_examples(sess, model, x, y, X, Y, attack_params, verbose, attack_log_fpath):
     model_wrapper = wrap_to_tohinz_model(model, X, Y)

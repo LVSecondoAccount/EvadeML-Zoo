@@ -14,7 +14,7 @@ def tohinz_svhn_model(logits=False, input_range_type=2, pre_filter=lambda x:x):
 
 def tohinz_model(input_shape, nb_filters, nb_denses, logits, input_range_type, pre_filter):
     model = Sequential()
-	
+    
     if input_range_type == 1:
         # The input data range is [0, 1]. 
         # Convert to [-0.5,0.5] by x-0.5.
@@ -61,9 +61,9 @@ def tohinz_model(input_shape, nb_filters, nb_denses, logits, input_range_type, p
     model.add(Dense(nb_denses[0], activation='relu'))
     model.add(Dropout(0.3))
 
-    model.add(Dense(nb_denses[1]))	
-	
+    model.add(Dense(nb_denses[1]))    
+    
     if not logits:
-    	model.add(Activation('softmax'))
+        model.add(Activation('softmax'))
 
     return model
